@@ -101,10 +101,23 @@ class Enrollment(models.Model):
     # Has a grade point for each question
     # Has question content
     # Other fields and methods you would like to design
+
+#questions and answers to be presented
+    question_prompts = [
+        "Should everybody have the same rights?\n (A) Yes\n (B) Of Course\n (C) Absolutely\n (D) No Doubt\n\n",
+        "Is programming fun?\n (A) Yes\n (B) Absolutely\n (C) For Sure\n (D) Its hard and I love it\n\n",
+
+    ]
 #class Question(models.Model):
     # Foreign key to lesson
     # question text
     # question grade/mark
+
+#Class pertaining to the questions
+Class Question:
+    def __init__(self, prompt, answer):
+        self.prompt = prompt
+        self.answer = answer
 
     # <HINT> A sample model method to calculate if learner get the score of the question
     #def is_get_score(self, selected_ids):
@@ -115,6 +128,21 @@ class Enrollment(models.Model):
     #    else:
     #        return False
 
+#Model for correct responses to questions
+questions = [
+    Question(question_prompts[0], "A, B, C, D")
+    Question(question_prompts[1], "A, B, C, D")
+]
+
+#presenting test and calculating score
+def run_test(questions):
+    score = 0
+    for question in questions:
+        answer = input(question.prompt)
+        if answer ==question.answer:
+            score += 1
+    print ("You correctly answered" + str(score) + "/" + str(len(questions)) + "questions")
+    
 
 #  <HINT> Create a Choice Model with:
     # Used to persist choice content for a question
