@@ -107,24 +107,20 @@ class Enrollment(models.Model):
     # question text
     # question grade/mark
 
-    # <HINT> A sample model method to calculate if learner get the score of the question
-    #def is_get_score(self, selected_ids):
-    #    all_answers = self.choice_set.filter(is_correct=True).count()
-    #    selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
-    #    if all_answers == selected_correct:
-    #        return True
-    #    else:
-    #        return False
+class Question(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=30)
+    learners = models.ManyToManyField(Instructor)
+    grade = models.CharField(max_length=30)
 
-#presenting test and calculating score
-def run_test(questions):
-    score = 0
-    for question in questions:
-        answer = input(question.prompt)
-        if answer ==question.answer:
-            score += 1
-    print ("You correctly answered" + str(score) + "/" + str(len(questions)) + "questions")
-    
+    # <HINT> A sample model method to calculate if learner get the score of the question
+    def is_get_score(self, selected_ids):
+        all_answers = self.choice_set.filter(is_correct=True).count()
+        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
+        if all_answers == selected_correct:
+            return True
+        else:
+            return False
 
 #  <HINT> Create a Choice Model with:
     # Used to persist choice content for a question
@@ -134,11 +130,16 @@ def run_test(questions):
     # Other fields and methods you would like to design
 # class Choice(models.Model):
 
+class Choice(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=30)
+    learners = models.CharField(max_length=30)
+
 # <HINT> The submission model
 # One enrollment could have multiple submission
 # One submission could have multiple choices
 # One choice could belong to multiple submissions
-#class Submission(models.Model):
-#    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
-#    choices = models.ManyToManyField(Choice)
-#    Other fields and methods you would like to design
+class Submission(models.Model):
+    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
+    choices = models.ManyToManyField(Choice)
+    Other fields and methods you would like to design
