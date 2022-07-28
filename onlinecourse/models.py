@@ -112,20 +112,6 @@ class Question(models.Model):
 
     grade = models.CharField(default=1.0)
 
-    def is_get_score(self, selected_ids):
-        all_answers = self.choice_set.filter(is_correct=True).count()
-        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
-        if all_answers == selected_correct:
-            return True
-        else:
-            return False
-
-class Question(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.CharField(max_length=30)
-    learners = models.ManyToManyField(Instructor)
-    grade = models.CharField(max_length=30)
-
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
@@ -144,9 +130,9 @@ class Question(models.Model):
 
 class Choice(models.Model):
    question = models.ForeignKey(Question, on_delete=models.CASCADE, default="")
-    text = models.CharField(max_length=550, null=True)
-    text = models.CharField(max_length=550, null=True)
-    is_correct = models.BooleanField(default=False)
+   text = models.CharField(max_length=550, null=True)
+   text = models.CharField(max_length=550, null=True)
+   is_correct = models.BooleanField(default=False)
 
 # <HINT> The submission model
 # One enrollment could have multiple submission
